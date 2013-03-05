@@ -1,0 +1,70 @@
+function git_prune_local()
+{
+    # This has to be run from master
+    git checkout master
+
+    # Update our list of remotes
+    git fetch --prune origin
+
+    # Remove local fully merged branches
+    echo "The following local branches are fully merged and will be removed:"
+    git branch --merged master | grep -v 'master$'
+
+    echo -n "Continue (y/n)? "
+    read yn
+
+    if [ "$yn" = "y" ] 
+        then
+            git branch --merged master | grep -v 'master$' | xargs git branch -d
+            echo "Done!"
+    fi
+
+}
+
+function git_prune_all()
+{
+    git_prune_local
+
+    # Show remote fully merged branches
+    echo "The following remote branches are fully merged and will be removed:"
+    git branch -r --merged master | sed 's/ *origin\///' | grep -v 'master$'
+
+    echo -n "Continue (y/n)? "
+    read yn
+    if [ "$yn" == "y" ]
+        then
+           # Remove remote fully merged branches
+           git branch -r --merged master | sed 's/ *origin\///' \
+                     | grep -v 'master$' | xargs -I% git push origin :%
+           echo "Done!"
+    fi
+}
+
+alias git_update_master="git fetch --prune origin && git fetch --prune upstream && git push origin upstream/master:master --force"
+# COMPASS COMPILE / WATCH ALIASING
+#
+alias compass_watch_c="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/cordova.scss -r compass-growl --output-style expanded"
+alias compass_watch_v="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/viewer.scss -r compass-growl --output-style expanded"
+alias compass_watch_vc="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{viewer,cordova}.scss -r compass-growl --output-style expanded"
+alias compass_watch_v_all="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{viewer,viewer_ie,cordova}.scss -r compass-growl --output-style expanded"
+
+alias compass_watch_e="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/app.scss -r compass-growl --output-style expanded"
+alias compass_watch_e_all="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app,app_ie}.scss -r compass-growl --output-style expanded"
+
+alias compass_watch_books="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app,viewer}.scss -r compass-growl --output-style expanded"
+alias compass_watch_books_ie="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app_ie,viewer_ie}.scss -r compass-growl --output-style expanded"
+
+alias compass_watch="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app,viewer,cordova}.scss -r compass-growl --output-style expanded"
+alias compass_watch_all="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build -r compass-growl --output-style expanded"
+
+# GRUNT / ANT HELPERS
+alias grunt_ios="ant cordova && grunt c"
+
+# PYTHON GOODIES
+#
+alias python_start="python2.7 manage.py runserver 0.0.0.0:8001"
+alias kill_datastore="rm -rf ./datastore && mkdir -p ./datastore && python tools/erase_reset_data.py --admin=first.last@webfilings.com --password=******"
+
+# FOR FUN
+#
+alias matrix='LC_ALL=C COL=$(( $(tput cols) / 2 )); clear; tput setaf 2; while :; do tput cup $((RANDOM%COL)) $((RANDOM%COL)); printf "%$((RANDOM%COL))s" $((RANDOM%2)); done'
