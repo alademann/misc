@@ -18,10 +18,11 @@
     .columns.browser .main,
     .listings-layout .columns.main { width: 1180px; }
     .news { width: 1000px; }
-    #notification-center .listings-layout .columns.main { width: 1180px; }
+    #notification-center .listings-layout .columns.main { width: 1250px; }
     .subscriptions-content { width: 1040px; }
     body.page-profile .profilecols .last { width: 1120px; }
     .settings-content { width: 1095px; }
+    .page-account .settings-content { width: 1030px; }
     .popular-repos .capped-box { width: 550px; } /* 1120/2 - gutter */
 
 
