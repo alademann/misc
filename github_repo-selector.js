@@ -1,9 +1,9 @@
 // ==UserScript==
 // @name           WebFilings Github Repo Selector
-// @description    I want to be able to quickly "jump" between repos i view often
+// @description    I want to be able to quickly "jump" between repos I view often
 // @author         Aaron Lademann
 // @include        https://github.com/
-// @version        0.0.1
+// @version        0.0.2
 // ==/UserScript==
 
 // USING THIS SCRIPT:
@@ -37,21 +37,27 @@
 
     var createOption = function(repoURI, nickname) {
         return '<a class="select-menu-item js-navigation-item" href="https://github.com/' + repoURI + '"><div class="select-menu-item-text">' + nickname + '</div></a>';
-        // return '<option value="' + repoURI + '" onclick="window.location.assign(https://github.com/' + repoURI + ')">' + value + '</option>';
     };
 
     // add repos you want to visit here
-    // -------------------------
     $.fn.populate = function() {
       $(this)
-        .append(createOption('WebFilings/bigsky', 'WF > Master'))
-        .append(createOption('ericburley-wf/bigsky', 'WF > Books'))
-        .append(createOption('shanesizer-wf/bigsky', 'WF > HC'))
-        .append('<div class="divider-horizontal"></div>')
-        .append(createOption('WebFilings/web-skin', 'WF > web-skin'))
-        .append('<div class="divider-horizontal"></div>')
+        .append('<div class="divider-horizontal">WF BigSky</div>')
+        .append(createOption('WebFilings/bigsky', 'Master'))
+        .append(createOption('ericburley-wf/bigsky', 'Books'))
+        .append(createOption('shanesizer-wf/bigsky', 'HC'))
+
+        .append('<div class="divider-horizontal">WF Web</div>')
+        .append(createOption('WebFilings/web-skin', 'web-skin'))
+        .append(createOption('WebFilings/web-bones', 'web-bones'))
+
+        .append('<div class="divider-horizontal">Libs</div>')
+        .append(createOption('twbs/bootstrap', 'libs > bootstrap'))
+        .append(createOption('harvesthq/chosen', 'libs > chosen'))
+        
+        .append('<div class="divider-horizontal">Personal</div>')
         .append(createOption('alademann/misc', 'personal > misc'))
-        .append(createOption('alademann/Sublime-Settings', 'personal > sublime'))
+        .append(createOption('alademann/SublimeText3-Packages', 'personal > sublime'))
         .append(createOption('alademann/Sass-Bootstrap', 'personal > sass bootstrap'));
     };
 
@@ -75,8 +81,6 @@
         menuHTML += '</div>'; // END select-menu
         menuHTML += '<div class="divider-vertical"></div>';
 
-    
-    // $('<select id="' + repoSelectElemId + '"><option value="" readonly selected>Repositories</option></select>').insertAfter($headerNotificationBtnDivider);
     $(menuHTML).insertAfter($headerNotificationBtnDivider);
 
     $('.select-menu-modal', '#' + repoSelectElemId).populate();
@@ -91,13 +95,13 @@
     }
 
     // style it
+    GM_addGlobalStyle( "#" + repoSelectElemId + " .divider-horizontal { display: table; table-layout: fixed; width: 100%; text-transform: uppercase; color: #aaa; font-weight: bold; padding: 16px 8px 0 8px; margin-top: -1px; background: white; }" );
+    GM_addGlobalStyle( "#" + repoSelectElemId + " .select-menu-item { padding-left: 12px; }" );
     GM_addGlobalStyle( "#" + repoSelectElemId + " { float: left; margin-top: 7px; }" );
     GM_addGlobalStyle( "#" + repoSelectElemId + " .select-menu-item:hover, #" + repoSelectElemId + " .select-menu-item:focus {"+ 
                        " background-color: #4183c4; color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,.5); }" );
-    GM_addGlobalStyle( "#" + repoSelectElemId + " .divider-horizontal {"+ 
-                       " border-top: 1px solid #ccc; }" );
+
 
 
 
 })(window);
-
