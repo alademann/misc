@@ -124,6 +124,10 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
     gha.util.DomWriter.attachGlobalCss = function () {
         var css = [];
 
+        // make sure there is enough room for our buttons
+        css.push('#files .diffstat+.css-truncate-target {\
+            max-width: 85% !important;\
+        }');
         css.push('.' + gha.util.hideClass + ' {\
             display: none !important;\
         }');
