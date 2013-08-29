@@ -238,8 +238,8 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
 
         var diffContainerBody = diffContainer.children[1];
 
-        var handlerForFileNameHeader = gha.util.ClickHandlers.createToggleDisplayHandler(diffContainerBody, false);
-        var handlerForHeader         = gha.util.ClickHandlers.createToggleDisplayHandler(diffContainerBody, true);
+        var handlerForFileNameHeader = gha.util.ClickHandlers.createToggleDisplayHandler(diffContainer, false);
+        var handlerForHeader         = gha.util.ClickHandlers.createToggleDisplayHandler(diffContainer, true);
 
         diffContainerFileNameHeader.addEventListener('click', handlerForFileNameHeader, false);
         diffContainerHeader        .addEventListener('click', handlerForHeader, true);
@@ -262,11 +262,11 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
         var nowHidden = hiddenByDefault; // closure to keep state
         newButton.addEventListener('click', function(evt) {
             if(nowHidden == true){
-                gha.util.VisibilityManager.toggleDisplayAll(true);
+                gha.util.VisibilityManager.toggleDisplayAll(true, true, true);
                 nowHidden = false;
                 newButton.innerHTML = L10N.collapseAll;
             } else {
-                gha.util.VisibilityManager.toggleDisplayAll(false);
+                gha.util.VisibilityManager.toggleDisplayAll(false, true, true);
                 nowHidden = true;
                 newButton.innerHTML = L10N.expandAll;
             }
@@ -393,12 +393,16 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
         var hashInUrl = document.location.hash.replace('#', '');
         for(var i=0, ii = nbOfCommits; i<ii; i++) {
             var child = children[i];
+            var diffContainer = child;
+            var diffContainerBody = diffContainer.children[1];
+
+            var diffVisibilityLocallyStored = typeof($(diffContainerBody).data('viewState')) !== 'undefined';
+            // if visible was already stored for a diff... don't collapse automatically when first loading page
+            var ignoreToggle = diffVisibilityLocallyStored;
+
             if(!child.id || child.id.indexOf('diff-') == -1){
                 continue;
             }
-
-            var diffContainer = child;
-            var diffContainerBody = diffContainer.children[1];
 
             var diffStats = parseInt(diffContainer.children[0].children[0].children[0].firstChild.textContent, 10);
             //console.log(diffStats);
@@ -430,8 +434,11 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
                         }
                     }
 
+                    
                     if (bKeepItemFromUrlHash && discussionInUrl) {
                         // don't collapse this file - it contains a diff comment
+                        continue;
+                    } else if(ignoreToggle) {
                         continue;
                     }
                 }
@@ -466,11 +473,16 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
                 }
             }
 
-            if(diffStats > minDiff && fileName != hashInUrl){
+
+            var permalinked = CONFIG.advancedCollapsing ? filename == hashInUrl : hashInUrl;
+            var ignoreAll = diffStats > minDiff && permalinked;
+
+            if(ignoreAll){
                 if(! hashInUrl) {
-                    if(! discussionInUrl) {
-                        diffContainer.classList.add(gha.util.collapseClass);
-                        diffContainerBody.classList.add(gha.util.hideClass);
+                    if(! discussionInUrl && ! ignoreToggle) {
+                        gha.util.VisibilityManager.toggleDisplay(diffContainer, false);
+                        // diffContainer.classList.add(gha.util.collapseClass);
+                        // diffContainerBody.classList.add(gha.util.hideClass);
                     }
                 } else {
                     // permalinked... don't collapse
@@ -480,13 +492,75 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
     };
 
     /**
+     * Collapse/expand individual diffs on the current page.
+     * @param {Object} diffContainer the container that holds the diff.
+     * @param {Boolean} fromButton whether the instruction to toggle came from a button (false if autohide).
+     * @param {String} explicit explicit instructions on whether to hide or show regardless of existing classes.
+     */
+    gha.util.VisibilityManager.toggleDisplay = function(diffContainer, fromButton, explicit) {
+        var diffContainerHeader = diffContainer.children[0];
+        var diffContainerBody = diffContainer.children[1];
+        var fromButton = (fromButton === true);
+        var explicit = explicit || false;
+        var fileName = diffContainer.querySelector('.meta').getAttribute('data-path');
+
+        // SHOW DIFF
+        // -------------------------
+        if(diffContainerBody.classList.contains(gha.util.hideClass) || (explicit === 'show')) {
+            if(! (explicit === 'hide')) {
+                // console.log('removing hide class for ' + fileName);
+                diffContainerBody.classList.remove(gha.util.hideClass);
+
+                // if the user initiated this toggle... preserve it
+                if(fromButton) {
+                    var filePath = gha.util.DomReader.getFilePathFromDiffContainerHeader(diffContainerHeader);
+                    // save in localstorage
+                    var newState = 1;
+                    gha.instance.storage.saveViewState(filePath, newState);
+                }
+            }
+        }
+        if(diffContainer.classList.contains(gha.util.collapseClass) || (explicit === 'show')) {
+            if(! (explicit === 'hide')) {
+                // console.log('removing collapse class for ' + fileName);
+                diffContainer.classList.remove(gha.util.collapseClass);
+            }
+        }
+
+        // HIDE DIFF
+        // -------------------------
+        if(! diffContainerBody.classList.contains(gha.util.hideClass) || (explicit === 'hide')) {
+            if(! (explicit === 'show')) {
+                // console.log('adding hide class for ' + fileName);
+                diffContainerBody.classList.add(gha.util.hideClass);
+
+                // if the user initiated this toggle... preserve it
+                if(fromButton) {
+                    var filePath = gha.util.DomReader.getFilePathFromDiffContainerHeader(diffContainerHeader);
+                    // save in localstorage
+                    var newState = 0;
+                    gha.instance.storage.saveViewState(filePath, newState);
+                }
+            }
+        }
+        if(! diffContainer.classList.contains(gha.util.collapseClass) || (explicit === 'hide')) {
+            if(! (explicit === 'show')) {
+                // console.log('adding collapse class for ' + fileName);
+                diffContainer.classList.add(gha.util.collapseClass);
+            }
+        }
+    };
+
+    /**
      * Collapse/expand all the diffs on the current page.
      * @param {Boolean} bVisible state after this invocation (true = hide items)
      * @param {Boolean} bKeepItemFromUrlHash whether to skip hiding files that were passed by hash in the URL. Default false.
+     * @param {Boolean} fromButton whether the instruction to toggle came from a button (false if autohide).
      */
-    gha.util.VisibilityManager.toggleDisplayAll = function(bVisible, bKeepItemFromUrlHash) {
+    gha.util.VisibilityManager.toggleDisplayAll = function(bVisible, bKeepItemFromUrlHash, fromButton) {
 
         var bKeepItemFromUrlHash = (bKeepItemFromUrlHash === true);
+        var fromButton = (fromButton === true);
         var mainDiffDiv = document.getElementById('files');
         var children = mainDiffDiv.children;
         var nbOfCommits = children.length;
@@ -496,12 +570,16 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
         var hashInUrl = document.location.hash.replace('#', '');
         for(var i=0, ii = nbOfCommits; i<ii; i++) {
             var child = children[i];
+            var diffContainer = child;
+            var diffContainerBody = diffContainer.children[1];
+
+            var locallyStoredViewState = $(diffContainerBody).data('viewState');
+            var diffVisibilityLocallyStored = typeof(locallyStoredViewState) !== 'undefined';
+            
             if(!child.id || child.id.indexOf('diff-') == -1){
                 continue;
             }
 
-            var diffContainer = child;
-            var diffContainerBody = diffContainer.children[1];
             var fileName = diffContainer.querySelector('.meta').getAttribute('data-path');
             var foundDiscussion = false;
             var foundLineNumber = false;
@@ -565,30 +643,35 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
                     }
                 }
             }
-            
-            if (bKeepItemFromUrlHash && !bVisible && fileName == hashInUrl){
-                continue;
-            }
 
-            if(bVisible) {
-                // show diffs
-                if(diffContainerBody.classList.contains(gha.util.hideClass)) {
-                    diffContainerBody.classList.remove(gha.util.hideClass);
-                }
-                if(diffContainer.classList.contains(gha.util.collapseClass)) {
-                    diffContainer.classList.remove(gha.util.collapseClass);
-                }
+            // console.log(fileName + ' - locallyStoredViewState: ' + locallyStoredViewState);
+            // if visible was already stored for a diff... don't collapse automatically when first loading page
+            var ignoreToggle = diffVisibilityLocallyStored && ! fromButton;
+            var permalinked = CONFIG.advancedCollapsing ? filename == hashInUrl : hashInUrl;
+            var ignoreAll = bKeepItemFromUrlHash && !bVisible && permalinked;
+
+            if (ignoreAll){
+                // file / conversation permalinked... don't collapse anything or else you'll corrupt the native 
+                // scroll-to behavior of the browser when a hash exists
+                continue;
             } else {
-                if(! hashInUrl) {
-                    if(! diffContainerBody.classList.contains(gha.util.hideClass)) {
-                        diffContainerBody.classList.add(gha.util.hideClass);
-                    }
-                    if(! diffContainer.classList.contains(gha.util.collapseClass)) {
-                        diffContainer.classList.add(gha.util.collapseClass);
-                    }
+                // no file / conversation permalinked... 
+                if(ignoreToggle) {
+                    var explicitToggle = (parseInt(locallyStoredViewState) === 0 ? 'hide' : 'show');
+                    gha.util.VisibilityManager.toggleDisplay(diffContainer, fromButton, explicitToggle);
+                    // console.log('[TOGGLEDISPLAYALL] gha.util.VisibilityManager.toggleDisplay(' + fileName + ', ' + fromButton + ', ' + explicitToggle + ')');
                 } else {
-                    // permalinked... don't hide anything
+                    if(bVisible) {
+                        gha.util.VisibilityManager.toggleDisplay(diffContainer, fromButton, 'show');
+                    } else {
+                        if(! hashInUrl) {
+                            gha.util.VisibilityManager.toggleDisplay(diffContainer, fromButton, 'hide');
+                        } else {
+                            // permalinked... don't hide anything
+                        }
+                    }
                 }
+
             }
             
         }
@@ -602,7 +685,7 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
      * @param elem element to be toggled upon clicking
      * @param bStrictTarget whether the event listener should fire only on its strict target or also children
      */
-    gha.util.ClickHandlers.createToggleDisplayHandler = function(elem, bStrictTarget) {
+    gha.util.ClickHandlers.createToggleDisplayHandler = function(diffContainer, bStrictTarget) {
         return function(evt){
             if(bStrictTarget){
                 if (evt.currentTarget != evt.target) {
@@ -611,11 +694,23 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
                 }
             }
 
-            var diffIsHidden = elem.classList.contains(gha.util.hideClass);
+            var diffContainerHeader = diffContainer.children[0];
+            var diffContainerBody = diffContainer.children[1];
+
+            var filePath = gha.util.DomReader.getFilePathFromDiffContainerHeader(diffContainerHeader);
+            var diffIsHidden = diffContainerBody.classList.contains(gha.util.hideClass);
             if(diffIsHidden) {
-                elem.classList.remove(gha.util.hideClass);
+                diffContainerBody.classList.remove(gha.util.hideClass);
+                
+                // save in localstorage
+                var newState = 1;
+                gha.instance.storage.saveViewState(filePath, newState);
             } else {
-                elem.classList.add(gha.util.hideClass);
+                diffContainerBody.classList.add(gha.util.hideClass);
+
+                // save in localstorage
+                var newState = 0;
+                gha.instance.storage.saveViewState(filePath, newState);
             }
         };
     };
@@ -638,7 +733,7 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
                 /* unmark */
 
                 // remove from localstorage
-                gha.instance.storage.clearState(filePath);
+                gha.instance.storage.clearState(filePath, 'review');
 
                 // unmark the header with background color change
                 gha.util.ReviewStatusMarker.unmark(diffContainerHeader, ghaClassName);
@@ -647,22 +742,45 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
 
                 // save in localstorage
                 var newState = (text === L10N.ok ? 1 : 0);
-                gha.instance.storage.saveState(filePath, newState);
+                gha.instance.storage.saveReviewState(filePath, newState);
 
                 // mark the header with background color change
                 gha.util.ReviewStatusMarker.mark(diffContainerHeader, ghaClassName, ghaClassNameAlt);
 
                 // hide the just-reviewed file contents
-                diffContainerBody.classList.add(gha.util.hideClass);
-                diffContainerHeader.classList.add(gha.util.collapseClass);
+                gha.util.VisibilityManager.toggleDisplay(diffContainer, true);
+                // diffContainerBody.classList.add(gha.util.hideClass);
+                // diffContainerHeader.classList.add(gha.util.collapseClass);
 
                 // scroll the page so that currently reviewed file is in the top
-                document.location = '#diff-' + currentDiffIdx;
+                var scrollHere = function (href, offset) {
+                    var offset = offset || 0;
+                    var target = href;
+                    var $body = $(document.body);
+                    var $target = $(target);
+                    
+                    if($target.length) {
+                        var offsetMethod = $body[0] == window ? 'offset' : 'position';
+
+                        $body.scrollTop($target[offsetMethod]().top + offset);
+
+                    } else {
+                        // there is no elem with this ID on the page.
+                        try {
+                            console.warn('No elem with id = ' + target);
+                        } catch(err) {
+                            // browser doesn't support console messages
+                        }
+                    }
+                };
+                evt.preventDefault(); // prevent native browser scroll
+                scrollHere('#diff-' + currentDiffIdx);
 
                 // expand the next file if it was hidden
                 var nextFileContainer = document.getElementById('diff-' + (currentDiffIdx+1));
                 if(nextFileContainer) {
-                    nextFileContainer.children[1].style.display = 'block';
+                    gha.util.VisibilityManager.toggleDisplay(nextFileContainer, true);
+                    // nextFileContainer.children[1].style.display = 'block';
                 }
             }
         };
@@ -700,7 +818,7 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
                 this._repoId = "#" + matches[1]; // we want repoId to be a leading substring of objectId
             } else {
                 console.error("Unable to create a local storage key for " + loc);
-                this.saveState = this.loadState = this.clearState = function () {};
+                this.saveReviewState = this.saveViewState = this.loadState = this.clearState = function () {};
             }
         };
 
@@ -708,23 +826,35 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
          * @param {String} filePath
          * @param {Integer} state 0 (fail), 1 (ok)
          */
-        this.saveState = function (filePath, state) {
-            var sKey = this._getKeyFromObjId(filePath);
-            window.localStorage.setItem(sKey, state);
+        this.saveReviewState = function (filePath, state) {
+            var key = this._getKeyFromObjId(filePath, 'review');
+            // console.log('saveReviewState(): ' + key + '?' + state);
+            window.localStorage.setItem(key, state);
+        };
+
+        /**
+         * @param {String} filePath
+         * @param {Integer} state 0 (collapsed), 1 (expanded)
+         */
+        this.saveViewState = function (filePath, state) {
+            var key = this._getKeyFromObjId(filePath, 'view');
+            // console.log('saveViewState(): ' + key + '?' + state);
+            window.localStorage.setItem(key, state);
         };
 
         /**
          * @param {String} filePath
          */
-        this.loadState = function (filePath) {
-            var sKey = this._getKeyFromObjId(filePath);
-            var value = window.localStorage.getItem(sKey);
+        this.loadState = function (filePath, stateType) {
+            var key = this._getKeyFromObjId(filePath, stateType);
+            var value = window.localStorage.getItem(key);
+            // console.log('loadState(): ' + key + '?' + stateType + ' == ' + value);
             return value;
         };
 
-        this.clearState = function (filePath) {
-            var sKey = this._getKeyFromObjId(filePath);
-            window.localStorage.removeItem(sKey);
+        this.clearState = function (filePath, stateType) {
+            var key = this._getKeyFromObjId(filePath, stateType);
+            window.localStorage.removeItem(key);
         };
 
         this.wipeStorage = function (arbitraryPrefix) {
@@ -749,8 +879,8 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
             return n;
         };
 
-        this._getKeyFromObjId = function (filePath) {
-            return this._prefix + this._objectId + filePath.replace(/\//g, '#');
+        this._getKeyFromObjId = function (filePath, stateType) {
+            return this._prefix + this._objectId + filePath.replace(/\//g, '#') + '?' + stateType;
         };
     };
 
@@ -770,16 +900,23 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
 
         this._updateStateFromStorage = function(diffContainer) {
             var diffContainerHeader = diffContainer.children[0];
+            var diffContainerBody = diffContainer.children[1];
 
             var filePath = gha.util.DomReader.getFilePathFromDiffContainerHeader(diffContainerHeader);
-            var state = this._storage.loadState(filePath); // might be 0, 1 or undefined
+            var reviewState = this._storage.loadState(filePath, 'review'); // might be 0, 1 or undefined
+            var viewState = this._storage.loadState(filePath, 'view'); // might be 0, 1 or undefined
 
-            if(state != null) {
-                var text = (state == 0) ? L10N.fail : L10N.ok;
+            if(reviewState != null) {
+                var text = (reviewState == 0) ? L10N.fail : L10N.ok;
                 var ghaClassName = 'ghAssistantButtonState' + text;
                 var ghaClassNameAlt = 'ghAssistantButtonState' + (text === L10N.ok ? L10N.fail : L10N.ok);
 
                 gha.util.ReviewStatusMarker.mark (diffContainerHeader, ghaClassName, ghaClassNameAlt);
+            }
+
+            if(viewState != null) {
+                // so that the toggleAll functions will know not to mess with it on load
+                $(diffContainerBody).data('viewState', viewState);
             }
         };
     };
@@ -826,7 +963,7 @@ if(typeof document!=="undefined"&&!("classList"in document.documentElement)){(fu
         gha.util.DomWriter.attachGlobalCss();
         gha.util.DomWriter.attachToggleDisplayOnClickListeners();
         if(autoHide) {
-            gha.util.VisibilityManager.toggleDisplayAll(false, true);
+            gha.util.VisibilityManager.toggleDisplayAll(false, true, false);
         }else if(autoHideLong) {
             gha.util.VisibilityManager.hideLongDiffs(CONFIG.hideFileWhenDiffGt);
         }
