@@ -62,7 +62,7 @@
     };
 
     // this is the elem we want to add our custom menu after
-    var $headerNotificationBtnDivider = $('.notification-indicator + .divider-vertical');
+    var $headerNotificationBtnDivider = $('.header .command-bar');
     var repoSelectElemId = 'repo-selector';
 
     
@@ -70,8 +70,9 @@
     // MENU HTML STRUCTURE
     // -------------------------
 
-    var menuHTML =  '<div class="select-menu js-menu-container js-select-menu" id="' + repoSelectElemId + '" style="float: left; margin-top: 7px;">';
-        menuHTML += '<span class="minibutton select-menu-button js-menu-target">';
+    var menuHTML =  '<div class="command-bar js-command-bar custom" style="width: 130px;">';
+        menuHTML += '<div class="select-menu js-menu-container js-select-menu" id="' + repoSelectElemId + '" style="margin-right: 15px;">';
+        menuHTML += '<span class="minibutton select-menu-button js-menu-target" style="padding: 1px 25px 1px 10px;">';
         menuHTML += 'Repositories';
         menuHTML += '</span>'; // END select-menu-button
         menuHTML += '<div class="select-menu-modal-holder js-menu-content">';
@@ -79,9 +80,9 @@
         menuHTML += '</div>'; // END select-menu-modal
         menuHTML += '</div>'; // END select-menu-modal-holder
         menuHTML += '</div>'; // END select-menu
-        menuHTML += '<div class="divider-vertical"></div>';
+        menuHTML += '</div>'; // END command-bar
 
-    $(menuHTML).insertAfter($headerNotificationBtnDivider);
+    $(menuHTML).insertBefore($headerNotificationBtnDivider);
 
     $('.select-menu-modal', '#' + repoSelectElemId).populate();
 
@@ -95,9 +96,11 @@
     }
 
     // style it
-    GM_addGlobalStyle( "#" + repoSelectElemId + " .divider-horizontal { display: table; table-layout: fixed; width: 100%; text-transform: uppercase; color: #aaa; font-weight: bold; padding: 16px 8px 0 8px; margin-top: -1px; background: white; }" );
+    
+    GM_addGlobalStyle( "#" + repoSelectElemId + " .minibutton { background-image: none; background-color: #e4e4e4; }" );
+    GM_addGlobalStyle( "#" + repoSelectElemId + " .minibutton:hover { background-image: none; background-color: #d3d3d3; }, #" + repoSelectElemId + " .minibutton:focus { background-image: none; background-color: #d3d3d3; }, #" + repoSelectElemId + ".active .minibutton { background-image: none; background-color: #d3d3d3 !important; }" );
+    GM_addGlobalStyle( "#" + repoSelectElemId + " .divider-horizontal { padding: 10px 0 5px 20px; font-weight: bold; text-transform: uppercase; background: #fefefe; margin-top: -1px; }" );
     GM_addGlobalStyle( "#" + repoSelectElemId + " .select-menu-item { padding-left: 12px; }" );
-    GM_addGlobalStyle( "#" + repoSelectElemId + " { float: left; margin-top: 7px; }" );
     GM_addGlobalStyle( "#" + repoSelectElemId + " .select-menu-item:hover, #" + repoSelectElemId + " .select-menu-item:focus {"+ 
                        " background-color: #4183c4; color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,.5); }" );
 
