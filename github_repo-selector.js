@@ -45,7 +45,7 @@
         .append('<div class="divider-horizontal">WF BigSky</div>')
         .append(createOption('WebFilings/bigsky', 'Master'))
         .append(createOption('ericburley-wf/bigsky', 'Books'))
-        .append(createOption('shanesizer-wf/bigsky', 'HC'))
+        .append(createOption('WebFilings/lib_viewer', 'lib_viewer'))
 
         .append('<div class="divider-horizontal">WF Web</div>')
         .append(createOption('WebFilings/web-skin', 'web-skin'))
