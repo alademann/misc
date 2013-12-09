@@ -45,11 +45,18 @@
         .append('<div class="divider-horizontal">WF BigSky</div>')
         .append(createOption('WebFilings/bigsky', 'Master'))
         .append(createOption('ericburley-wf/bigsky', 'Books'))
-        .append(createOption('WebFilings/lib_viewer', 'lib_viewer'))
+        .append(createOption('bryanhales-wf/mobile', 'mobile'))
 
         .append('<div class="divider-horizontal">WF Web</div>')
         .append(createOption('WebFilings/web-skin', 'web-skin'))
         .append(createOption('WebFilings/web-bones', 'web-bones'))
+
+        .append('<div class="divider-horizontal">WF JS</div>')
+        .append(createOption('WebFilings/wf-js-vendor', 'wf-js-vendor'))
+        .append(createOption('WebFilings/wf-js-grunt', 'wf-js-grunt'))
+        .append(createOption('WebFilings/wf-js-uicomponents', 'wf-js-uicomponents'))
+        .append(createOption('WebFilings/wf-js-annotations', 'wf-js-annotations'))
+        .append(createOption('WebFilings/lib_viewer', 'lib_viewer'))
 
         .append('<div class="divider-horizontal">Libs</div>')
         .append(createOption('twbs/bootstrap', 'libs > bootstrap'))
