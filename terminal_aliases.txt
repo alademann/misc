@@ -1,70 +1,101 @@
-function git_prune_local()
-{
-    # This has to be run from master
-    git checkout master
+#
+# BASE CONFIG
+#
 
-    # Update our list of remotes
-    git fetch --prune origin
+source $ZSH/oh-my-zsh.sh
+source ~/.bashrc
 
-    # Remove local fully merged branches
-    echo "The following local branches are fully merged and will be removed:"
-    git branch --merged master | grep -v 'master$'
+ZSH=$HOME/.oh-my-zsh
+ZSH_THEME="robbyrussell"
 
-    echo -n "Continue (y/n)? "
-    read yn
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+ulimit -n 2048
 
-    if [ "$yn" = "y" ] 
-        then
-            git branch --merged master | grep -v 'master$' | xargs git branch -d
-            echo "Done!"
-    fi
 
-}
+#
+# MISC UTILITIES
+#
 
-function git_prune_all()
-{
-    git_prune_local
+alias zshrc='source ~/.zshrc'
+alias getpath='echo -n $PWD|pbcopy|echo "current path copied to clipboard"'
 
-    # Show remote fully merged branches
-    echo "The following remote branches are fully merged and will be removed:"
-    git branch -r --merged master | sed 's/ *origin\///' | grep -v 'master$'
 
-    echo -n "Continue (y/n)? "
-    read yn
-    if [ "$yn" == "y" ]
-        then
-           # Remove remote fully merged branches
-           git branch -r --merged master | sed 's/ *origin\///' \
-                     | grep -v 'master$' | xargs -I% git push origin :%
-           echo "Done!"
-    fi
-}
+#
+# PATH SHORTCUTS
+#
+
+alias ls_projects='echo "bigsky \nbooks \nwebskin \nwebbones \nra2 \nlib_viewer \nrv \ndatacollection \ndoc_viewer \nhub \nbootstrap \nchosenjs \nbystl \ncclaire"'
+
+# WF PROJECT / APP PATHS
+alias bigsky='~/workspaces/wf/bigsky/z_bigsky'
+alias webskin='cd ~/workspaces/wf/web-skin/'
+alias webbones='cd ~/workspaces/wf/web-bones/'
+alias ra2='cd ~/workspaces/wf/bigsky/z_bigsky/externals/richapps/richapps'
+alias books='~/workspaces/wf/bigsky/z_bigsky/books'
+alias lib_viewer='~/workspaces/wf/lib_viewer'
+alias rv='~/workspaces/wf/bigsky/z_bigsky/apps/rv'
+alias datacollection='~/workspaces/wf/bigsky/z_bigsky/apps/datacollection'
+alias doc_viewer='~/workspaces/wf/bigsky/z_bigsky/apps/doc_viewer'
+alias hub='~/workspaces/wf/bigsky/z_bigsky/apps/hub'
+
+# PERSONAL PROJECT PATHS
+alias cclaire='cd ~/Dropbox/_git/_personal/_clients/cclaireembroidery/shopify/c-claire-embroidery-4517373'
+alias bystl='cd ~/Dropbox/_git/_personal/_clients/bystl/site/web/dev/wp-content/themes/bystl_WP'
+alias bootstrap='cd ~/Dropbox/_git/_personal/bootstrap'
+alias chosenjs='cd ~/Dropbox/_git/_personal/chosen-js'
+
+# OTHER PATHS
+alias st3='~/Library/Application\ Support/Sublime\ Text\ 3/Packages'
+
+
+#
+# GIT FAST / BULK COMMANDS
+#
 
 alias git_update_master="git fetch --prune origin && git fetch --prune upstream && git push origin upstream/master:master --force"
+alias git_prune_remote="git branch -r --merged upstream/master | grep origin | grep -v origin/master | sed 's/ *origin\///' | xargs -I%  echo git push origin :%"
+alias gt="gittower"
+
+
+#
 # COMPASS COMPILE / WATCH ALIASING
 #
-alias compass_watch_c="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/cordova.scss -r compass-growl --output-style expanded"
-alias compass_watch_v="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/viewer.scss -r compass-growl --output-style expanded"
-alias compass_watch_vc="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{viewer,cordova}.scss -r compass-growl --output-style expanded"
-alias compass_watch_v_all="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{viewer,viewer_ie,cordova}.scss -r compass-growl --output-style expanded"
 
-alias compass_watch_e="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/app.scss -r compass-growl --output-style expanded"
-alias compass_watch_e_all="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app,app_ie}.scss -r compass-growl --output-style expanded"
+alias compass_watch_books="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app,app_ie,viewer,viewer_ie,cordova}.scss -r compass-growl --output-style expanded"
 
-alias compass_watch_books="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app,viewer}.scss -r compass-growl --output-style expanded"
-alias compass_watch_books_ie="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app_ie,viewer_ie}.scss -r compass-growl --output-style expanded"
 
-alias compass_watch="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build ~/workspaces/wf/bigsky/z_bigsky/books/scss/{app,viewer,cordova}.scss -r compass-growl --output-style expanded"
-alias compass_watch_all="compass watch ~/workspaces/wf/bigsky/z_bigsky/books/tools/build -r compass-growl --output-style expanded"
-
+#
 # GRUNT / ANT HELPERS
-alias grunt_ios="ant cordova && grunt c"
+#
 
+alias grunt_ios="ant cordova && grunt c"
+alias grunt_ws="grunt dev --no_msie=true --compass_plugins='compass-growl'"
+alias grunt_ws_msie="grunt dev --compass_plugins='compass-growl'"
+
+
+#
 # PYTHON GOODIES
 #
-alias python_start="python2.7 manage.py runserver 0.0.0.0:8001"
-alias kill_datastore="rm -rf ./datastore && mkdir -p ./datastore && python tools/erase_reset_data.py --admin=first.last@webfilings.com --password=******"
+alias python_start='echo "***DONT FORGET TO BACKUP YOUR DATASTORE SOON***" && python2.7 manage.py runserver 0.0.0.0:8001'
+alias gae='echo "***DONT FORGET TO BACKUP YOUR DATASTORE SOON***" && python2.7 manage.py runserver 0.0.0.0:8001'
+alias backup_datastore='echo "backing up your bigsky datastore" rsync -av ~/workspaces/wf/bigsky/z_bigsky/datastore/* ~/Dropbox/_bigsky-ds-backup'
+alias kill_datastore='rm -rf ./datastore && mkdir -p ./datastore && python tools/erase_reset_data.py --admin=aaron.lademann@webfilings.com --password=w3bfilings'
+alias upload_fonts='python tools/remote_api/upload_font.py ../../font/fonts --appid=big-sky'
+alias pypi='~/workspaces/wf/bigsky/z_bigsky && pip install -Ur requirements.txt && ant link-libs'
 
+
+#
 # FOR FUN
 #
 alias matrix='LC_ALL=C COL=$(( $(tput cols) / 2 )); clear; tput setaf 2; while :; do tput cup $((RANDOM%COL)) $((RANDOM%COL)); printf "%$((RANDOM%COL))s" $((RANDOM%2)); done'
+
+
+# AUTOMATICALLY ACTIVATE SKY VIRTUAL ENVIRONMENT
+alias sky="source ~/dev/wf/sky/bin/activate"
+sky
+
+
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/X11/bin
+# Add RVM to PATH for scripting
+PATH=$PATH:$HOME/.rvm/bin 
