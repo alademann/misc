@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./markdown-resources/github-markdown.css">
+    <link rel="stylesheet" href="./css/dev-interview.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <title>js-questions</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Developer Interview Resources</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./">Home</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <!-- TODO: write some javasctipt to activate these based on the url -->
+          <ul class="nav nav-sidebar">
+            <li class="nav-group-title">CSS</li>
+            <li><a href="./css-questions.html">Questions</a></li>
+            <li><a href="./css-codepen-criteria.html">Codepen Tests</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="nav-group-title">JS</li>
+            <li><a href="./js-questions.html">Questions</a></li>
+            <li><a href="./js-codepen-criteria.html">Codepen Tests</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <!-- TODO -->
+            <li class="nav-group-title">HTML</li>
+            <!-- <li><a href="./js-questions.html">Questions</a></li>
+            <li><a href="./js-codepen-criteria.html">Codepen Tests</a></li> -->
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="markdown-body">
+                <h1>
+<a name="user-content-js-interview-questions" class="anchor" href="#js-interview-questions"><span class="octicon octicon-link"></span></a>JS Interview Questions</h1>
+
+<h2>
+<a name="user-content-why-does-the-code-below-log-undefined-when-i-declared-the-jack-variable-to-be-jack" class="anchor" href="#why-does-the-code-below-log-undefined-when-i-declared-the-jack-variable-to-be-jack"><span class="octicon octicon-link"></span></a>Why does the code below log <code>undefined</code> when I declared the jack variable to be 'Jack'?</h2>
+
+<div class="highlight highlight-js"><pre><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">jack</span> <span class="o">=</span> <span class="s1">'Jack'</span><span class="p">;</span>
+<span class="p">})();</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="k">typeof</span> <span class="nx">jack</span><span class="p">);</span>
+</pre></div>
+
+<ul>
+<li>Because variables in javascript have function scope.</li>
+</ul><hr><h2>
+<a name="user-content-why-would-this-code-not-work-as-expected-is-anything-missing" class="anchor" href="#why-would-this-code-not-work-as-expected-is-anything-missing"><span class="octicon octicon-link"></span></a>Why would this code not work as expected? Is anything missing?</h2>
+
+<p>function User(name) {
+    this.name = name;
+};</p>
+
+<p>var j = User('Jack');
+console.log(j.name);</p>
+
+<ul>
+<li>
+<code>this</code> has function scope, and is not returned via the <code>User</code> function.</li>
+</ul><hr><h2>
+<a name="user-content-why-isnt-parsed-equal-to-8-in-older-browsers" class="anchor" href="#why-isnt-parsed-equal-to-8-in-older-browsers"><span class="octicon octicon-link"></span></a>Why isn't <code>parsed</code> equal to 8 in older browsers?</h2>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">number</span> <span class="o">=</span> <span class="s1">'08'</span><span class="p">,</span>
+    <span class="nx">parsed</span> <span class="o">=</span> <span class="nb">parseInt</span><span class="p">(</span><span class="nx">number</span><span class="p">);</span>
+</pre></div>
+
+<ul>
+<li>Because the default value of the radix parameter of <code>parseInt(str, [radix])</code> in older browsers is 8 - which means that strings starting with <code>0</code> will be interpreted as octal.</li>
+</ul><blockquote>
+<p><strong>Bonus points</strong> for telling me what parsed is equal to in older browsers. (answer is <code>0</code>);</p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-in-javascript-what-is-the-difference-between-var-x--1-and-x--1" class="anchor" href="#in-javascript-what-is-the-difference-between-var-x--1-and-x--1"><span class="octicon octicon-link"></span></a>In JavaScript, what is the difference between <code>var x = 1</code> and <code>x = 1</code>?</h2>
+
+<h3>
+<a name="user-content-answer-in-as-much-or-as-little-detail-as-you-feel-comfortable" class="anchor" href="#answer-in-as-much-or-as-little-detail-as-you-feel-comfortable"><span class="octicon octicon-link"></span></a>Answer in as much or as little detail as you feel comfortable.</h3>
+
+<ul>
+<li>
+<strong>Novice</strong> JS programmers might have a basic answer about locals vs globals.</li>
+<li>
+<strong>Intermediate</strong> JS guys should definitely have that answer, and should probably mention function-level scope.</li>
+<li>
+<strong>Advanced</strong> JS programmers should be prepared to talk about locals, implied globals, the window object, function-scope, declaration hoisting, and scope chains.</li>
+</ul><hr><h2>
+<a name="user-content-write-a-sum-function-that-accepts-any-number-of-arguments-and-returns-their-sum" class="anchor" href="#write-a-sum-function-that-accepts-any-number-of-arguments-and-returns-their-sum"><span class="octicon octicon-link"></span></a>Write a sum() function that accepts any number of arguments, and returns their sum.</h2>
+
+<h3>
+<a name="user-content-use-that-function-without-modification-to-sum-all-the-values-in-an-array-they-should-write-a-function-that-looks-like-this" class="anchor" href="#use-that-function-without-modification-to-sum-all-the-values-in-an-array-they-should-write-a-function-that-looks-like-this"><span class="octicon octicon-link"></span></a>Use that function (without modification) to sum all the values in an array. They should write a function that looks like this:</h3>
+
+<div class="highlight highlight-js"><pre><span class="kd">function</span> <span class="nx">sum</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">l</span><span class="p">,</span> <span class="nx">result</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">l</span> <span class="o">=</span> <span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">result</span> <span class="o">+=</span> <span class="nx">arguments</span><span class="p">[</span><span class="nx">i</span><span class="p">];</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">result</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nx">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">);</span> <span class="c1">// 6</span>
+</pre></div>
+
+<p>And they should invoke it on your array like this (context for apply can be whatever, I usually use null in that case):</p>
+
+<div class="highlight highlight-js"><pre><span class="kd">var</span> <span class="nx">data</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">];</span>
+<span class="nx">sum</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="kc">null</span><span class="p">,</span> <span class="nx">data</span><span class="p">);</span> <span class="c1">// 6</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-misc-topics-of-interest" class="anchor" href="#misc-topics-of-interest"><span class="octicon octicon-link"></span></a>Misc topics of interest</h2>
+
+<p><strong>Basic JS programmming</strong></p>
+
+<ul>
+<li>Scope of variable</li>
+<li>What is Associative Array? How do we use it?</li>
+</ul><p><strong>OOPS JS</strong></p>
+
+<ul>
+<li>Difference between Classic Inheritance and Prototypical Inheritance</li>
+<li>What is difference between private variable, public variable and static variable? How we achieve this in JS?</li>
+<li>How to add/remove properties to object in run time?</li>
+<li>How to achieve inheritance ?</li>
+<li>How to extend built-in objects?</li>
+<li>Why extending array is bad idea?</li>
+</ul><p><strong>DOM and JS</strong></p>
+
+<ul>
+<li>Difference between browser detection and feature detection</li>
+<li>DOM Event Propagation</li>
+<li>Event Delegation</li>
+<li>Event bubbling V/s Event Capturing</li>
+</ul><p><strong>Misc</strong></p>
+
+<ul>
+<li>Graceful Degradation V/s Progressive Enhancement</li>
+</ul>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="./js/dev-interview.js"></script>
+</body>
+</html>

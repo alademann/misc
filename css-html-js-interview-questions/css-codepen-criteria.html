@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./markdown-resources/github-markdown.css">
+    <link rel="stylesheet" href="./css/dev-interview.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <title>css-codepen-criteria</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Developer Interview Resources</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./">Home</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <!-- TODO: write some javasctipt to activate these based on the url -->
+          <ul class="nav nav-sidebar">
+            <li class="nav-group-title">CSS</li>
+            <li><a href="./css-questions.html">Questions</a></li>
+            <li><a href="./css-codepen-criteria.html">Codepen Tests</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="nav-group-title">JS</li>
+            <li><a href="./js-questions.html">Questions</a></li>
+            <li><a href="./js-codepen-criteria.html">Codepen Tests</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <!-- TODO -->
+            <li class="nav-group-title">HTML</li>
+            <!-- <li><a href="./js-questions.html">Questions</a></li>
+            <li><a href="./js-codepen-criteria.html">Codepen Tests</a></li> -->
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="markdown-body">
+                <h1>
+<a name="user-content-css-proficiency-tests" class="anchor" href="#css-proficiency-tests"><span class="octicon octicon-link"></span></a>CSS Proficiency Tests</h1>
+
+<blockquote>
+<p>Tests described below can all be found in <a href="http://codepen.io/collection/daEif/">this collection</a> on CodePen.</p>
+</blockquote>
+
+<h2>
+<a name="user-content-css-button" class="anchor" href="#css-button"><span class="octicon octicon-link"></span></a><a href="http://codepen.io/alademann/pen/cAxzs?editors=010">CSS BUTTON</a>
+</h2>
+
+<h3>
+<a name="user-content-instructions" class="anchor" href="#instructions"><span class="octicon octicon-link"></span></a>Instructions</h3>
+
+<blockquote>
+<p>Using CSS properties alone (No Background Images), recreate this button:</p>
+</blockquote>
+
+<p><a href="https://camo.githubusercontent.com/61b32169aff374dadd90d1e843d184a7df3631f9/687474703a2f2f692e696d6775722e636f6d2f676e5a6e592e706e67" target="_blank"><img src="https://camo.githubusercontent.com/61b32169aff374dadd90d1e843d184a7df3631f9/687474703a2f2f692e696d6775722e636f6d2f676e5a6e592e706e67" alt="Button Sample" data-canonical-src="http://i.imgur.com/gnZnY.png" style="max-width:100%;"></a></p>
+
+<blockquote>
+<p>Spend no longer than 15 minutes on it, we don't expect it to be a perfect match. It's open book, feel free to hit Google but be prepared to explain your solution.</p>
+</blockquote>
+
+<h3>
+<a name="user-content-test-criteria" class="anchor" href="#test-criteria"><span class="octicon octicon-link"></span></a>Test Criteria</h3>
+
+<ul>
+<li>How did they handle <a href="http://css-tricks.com/snippets/css/multiple-borders/">multiple borders</a>? <code>box-shadow</code> is probably the best way here.</li>
+<li>Did they use <code>text-transform: uppercase;</code> for the text? That would be best.</li>
+<li>How did they handle the stars? Pseudo elements would be a good candidate there. Did they use unicode? Icon font?</li>
+<li>Did they catch the subtle <code>text-shadow</code>?</li>
+<li>How did they split the background in the main part of the button? a <code>linear-gradient</code> with no fade would be a good technique there. Or <code>box-shadow</code>.</li>
+<li>Were they <a href="http://css-tricks.com/public-service-announcement-careful-with-your-nested-border-radii/">careful</a> with the nested <code>border-radius</code>?</li>
+</ul><blockquote>
+<p>Decent answer <a href="http://codepen.io/gillytech/pen/duHFG">here</a></p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-css-float-clearing" class="anchor" href="#css-float-clearing"><span class="octicon octicon-link"></span></a><a href="http://codepen.io/alademann/pen/hApJd?editors=110">CSS FLOAT CLEARING</a>
+</h2>
+
+<h3>
+<a name="user-content-instructions-1" class="anchor" href="#instructions-1"><span class="octicon octicon-link"></span></a>Instructions</h3>
+
+<blockquote>
+<p>Using css changes only, make the green div completely contain the blue div</p>
+</blockquote>
+
+<h3>
+<a name="user-content-test-criteria-1" class="anchor" href="#test-criteria-1"><span class="octicon octicon-link"></span></a>Test Criteria</h3>
+
+<p>They can either use the <code>.clearfix { overflow: hidden; }</code> solution, or the preferred micro clearfix:</p>
+
+<div class="highlight highlight-css"><pre><span class="nc">.clearfix</span> <span class="p">{</span>
+    <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.clearfix</span><span class="nd">:after</span> <span class="p">{</span>
+    <span class="k">clear</span><span class="o">:</span> <span class="k">both</span><span class="p">;</span>
+    <span class="k">content</span><span class="o">:</span> <span class="s2">"."</span><span class="p">;</span>
+    <span class="k">display</span><span class="o">:</span> <span class="k">block</span><span class="p">;</span>
+    <span class="k">height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">line-height</span><span class="o">:</span> <span class="m">0</span><span class="p">;</span>
+    <span class="k">visibility</span><span class="o">:</span> <span class="k">hidden</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+
+<hr><h2>
+<a name="user-content-fix-the-sidebar" class="anchor" href="#fix-the-sidebar"><span class="octicon octicon-link"></span></a><a href="http://codepen.io/alademann/pen/dwcbj?editors=110">FIX THE SIDEBAR</a>
+</h2>
+
+<h3>
+<a name="user-content-instructions-2" class="anchor" href="#instructions-2"><span class="octicon octicon-link"></span></a>Instructions</h3>
+
+<blockquote>
+<p>The right sidebar here has fallen down below the content. Show me some different ways you could fix that.</p>
+</blockquote>
+
+<p><a href="https://camo.githubusercontent.com/e5fa0483a6567a9d1bdd156cc01e6270a71d2ce3/687474703a2f2f63646e2e6373732d747269636b732e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031332f31302f66616c6c656e2d736964656261722e6a7067" target="_blank"><img src="https://camo.githubusercontent.com/e5fa0483a6567a9d1bdd156cc01e6270a71d2ce3/687474703a2f2f63646e2e6373732d747269636b732e636f6d2f77702d636f6e74656e742f75706c6f6164732f323031332f31302f66616c6c656e2d736964656261722e6a7067" alt="Broken Sidebar" data-canonical-src="http://cdn.css-tricks.com/wp-content/uploads/2013/10/fallen-sidebar.jpg" style="max-width:100%;"></a></p>
+
+<h3>
+<a name="user-content-test-criteria-2" class="anchor" href="#test-criteria-2"><span class="octicon octicon-link"></span></a>Test Criteria</h3>
+
+<p>Even though the two columns are 75% and 25% wide and floated opposite ways, the sidebar has fallen. The reason is because the columns don't actually add up to 100% - they add up to more than that due to the padding. There are a number of ways to fix it:</p>
+
+<ul>
+<li>Using <code>box-sizing: border-box;</code> on the appropriate elements is the most efficient fix.</li>
+<li>Using <code>calc()</code> on the widths to remove the <code>1rem</code> padding is another way.</li>
+<li>Putting the padding on an added internal wrapper element instead of the columns is a fix that will work with very deep browser support.</li>
+<li>Adjusting the numbers to make the math work is another way. For instance making the widths of the columns <code>4%</code> narrower and using <code>2%</code> for the padding instead.</li>
+<li>
+<em>There are other ways.</em> The more solutions they can think of, the more creative and versatile a problem solver they are.</li>
+</ul><hr><h2>
+<a name="user-content-make-this-design-fluid--responsive" class="anchor" href="#make-this-design-fluid--responsive"><span class="octicon octicon-link"></span></a><a href="http://codepen.io/alademann/pen/fBhoi?editors=110">MAKE THIS DESIGN FLUID / RESPONSIVE</a>
+</h2>
+
+<h3>
+<a name="user-content-instructions-3" class="anchor" href="#instructions-3"><span class="octicon octicon-link"></span></a>Instructions</h3>
+
+<blockquote>
+<p><a href="http://codepen.io/alademann/pen/fBhoi?editors=110">Here's a design</a>. It's a fixed <code>800px</code> wide. Do your best at making it fit the screen more appropriately at any screen size.</p>
+</blockquote>
+
+<h3>
+<a name="user-content-test-criteria-3" class="anchor" href="#test-criteria-3"><span class="octicon octicon-link"></span></a>Test Criteria</h3>
+
+<p>This is just one ingredient to responsive design <em>(which they should probably at least be familiar with)</em> but it's an important one. It can help prove they can think spatially and make reasoned choices about layout. I'd look for:</p>
+
+<ul>
+<li>Changing the pixel widths to percentages <em>(how did they handle the math? Sass?)</em>
+</li>
+<li>Did they do anything special for large screens or just small?</li>
+<li>Did they attempt to use a responsive images solution?</li>
+<li>Does the new design retain the hierarchy of importance inherit to the original?</li>
+<li>Did they come back at you with questions? <em>(Lots of things to ask here, including what other resources might be available.)</em>
+</li>
+<li>Did they test it? <em>(To make sure it actually works, and find things like missing meta tags.)</em>
+</li>
+</ul>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="./js/dev-interview.js"></script>
+</body>
+</html>

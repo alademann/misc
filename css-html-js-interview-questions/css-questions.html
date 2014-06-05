@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./markdown-resources/github-markdown.css">
+    <link rel="stylesheet" href="./css/dev-interview.css">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <title>css-questions</title>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="./">Developer Interview Resources</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="./">Home</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <!-- TODO: write some javasctipt to activate these based on the url -->
+          <ul class="nav nav-sidebar">
+            <li class="nav-group-title">CSS</li>
+            <li><a href="./css-questions.html">Questions</a></li>
+            <li><a href="./css-codepen-criteria.html">Codepen Tests</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <li class="nav-group-title">JS</li>
+            <li><a href="./js-questions.html">Questions</a></li>
+            <li><a href="./js-codepen-criteria.html">Codepen Tests</a></li>
+          </ul>
+          <ul class="nav nav-sidebar">
+            <!-- TODO -->
+            <li class="nav-group-title">HTML</li>
+            <!-- <li><a href="./js-questions.html">Questions</a></li>
+            <li><a href="./js-codepen-criteria.html">Codepen Tests</a></li> -->
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="markdown-body">
+                <h1>
+<a name="user-content-css-interview-questions" class="anchor" href="#css-interview-questions"><span class="octicon octicon-link"></span></a>CSS Interview Questions</h1>
+
+<h2>
+<a name="user-content-what-is-the-box-model-in-css-which-css-properties-are-a-part-of-it" class="anchor" href="#what-is-the-box-model-in-css-which-css-properties-are-a-part-of-it"><span class="octicon octicon-link"></span></a>What is the "Box Model" in CSS? Which CSS properties are a part of it?</h2>
+
+<p>The CSS <a href="http://css-tricks.com/the-css-box-model/">box model</a> is fundamental to understanding layout and sizing and such. It's made up of:</p>
+
+<ul>
+<li>Width and height (or in the absence of that, default values and the content inside)</li>
+<li>Padding</li>
+<li>Border</li>
+</ul><p><a href="https://camo.githubusercontent.com/f4dcf4f8411cb081fcec1ad18a549e1882c31110/687474703a2f2f6373732d747269636b732e636f6d2f77702d636f6e74656e742f637373747269636b732d75706c6f6164732f746865626f782e706e67" target="_blank"><img src="https://camo.githubusercontent.com/f4dcf4f8411cb081fcec1ad18a549e1882c31110/687474703a2f2f6373732d747269636b732e636f6d2f77702d636f6e74656e742f637373747269636b732d75706c6f6164732f746865626f782e706e67" alt="CSS Box Model" data-canonical-src="http://css-tricks.com/wp-content/csstricks-uploads/thebox.png" style="max-width:100%;"></a></p>
+
+<blockquote>
+<p><strong>Bonus points</strong> for mentioning that <code>margin</code> is related but not technically a part of it.</p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-what-are-sass--less-why-do-people-use-them-how-does-something-like-compass-relate-to-sass" class="anchor" href="#what-are-sass--less-why-do-people-use-them-how-does-something-like-compass-relate-to-sass"><span class="octicon octicon-link"></span></a>What are Sass / LESS? Why do people use them? How does something like Compass relate to Sass?</h2>
+
+<p>They are CSS preprocessors. They are an abstraction layer on top of CSS. They are a special syntax/language that compile down into CSS. They make managing CSS easier, with things like variables and mixins to handle vendor prefixes (among other things). They make doing best practices easier, like concatenating and compressing CSS.</p>
+
+<blockquote>
+<p><strong>Bonus points</strong> for knowing how they differ and/or having experience using them. More bonus points for knowing what things like Compass, Bourbon, LESSHat, Nib, etc are and how they relate.</p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-name-some-online-resources-that-you-reference-when-having-css-issues" class="anchor" href="#name-some-online-resources-that-you-reference-when-having-css-issues"><span class="octicon octicon-link"></span></a>Name some online resources that you reference when having CSS issues.</h2>
+
+<p>Being good at googling problems you are having is a valuable job skill. There isn't any shame in it. There is shame in spinning your wheels because "you should know this." If you don't have time to do the Googling exercise above, just asking about resources can be telling.</p>
+
+<p>Google is a pretty good answer <em>(since it's true and we all know it)</em>. But being able to name some specific sites is a good indicator they have done it a bunch and are familiar with the places they land and know their favorites. Stuff like MDN (Mozilla Developer Network) is a good answer.</p>
+
+<hr><h2>
+<a name="user-content-describe-what-a-reset-css-file-does-and-how-its-useful" class="anchor" href="#describe-what-a-reset-css-file-does-and-how-its-useful"><span class="octicon octicon-link"></span></a>Describe what a "reset" CSS file does and how it's useful.</h2>
+
+<p>Resets are so wildly common in CSS that anyone who is a front end developer type has surely used them. Do they do so blindly or do they know why? The reason is essentially that different browsers have different default styling for elements, and if you don't deal with that at all, you risk designers looking unnecessarily different in different browsers and possibly more dramatic breaking problems.</p>
+
+<h3>
+<a name="user-content-are-you-familiar-with-normalizecss-do-you-understand-how-they-differ" class="anchor" href="#are-you-familiar-with-normalizecss-do-you-understand-how-they-differ"><span class="octicon octicon-link"></span></a>Are you familiar with normalize.css? Do you understand how they differ?</h3>
+
+<p><a href="http://necolas.github.io/normalize.css/">Normalize</a> you might call a CSS reset alternative. Instead of wiping out all styles, it delivers a set of reasonable defaults. It doesn't unset things that are already consistent across browsers and reasonable <em>(e.g. bold headers)</em>. In that way it does some less than a reset. It also does some more than a reset in that it handles quirks you may never consider, like HTML5 audio element inconsistencies or line-height inconsistencies when you use sub and sup elements.</p>
+
+<hr><h2>
+<a name="user-content-what-are-the-various-techniques-for-clearing-floats" class="anchor" href="#what-are-the-various-techniques-for-clearing-floats"><span class="octicon octicon-link"></span></a>What are the various techniques for clearing floats?</h2>
+
+<p><a href="http://css-tricks.com/all-about-floats/">Floats</a> are still incredibly common. As this is published, still probably the most cross-browser consistent way to build layout and grids. Anyone who has worked with them is aware of float collapsing. That is, floated element do not add to the height of a parent element. So for example if a parent element contained only floated elements, it would collapse to zero height. You can deal with that like:</p>
+
+<ul>
+<li>Use a clearfix (bonus points for micro clearfix).</li>
+<li>Float the parent as well.</li>
+<li>Use an overflow property other than "visible" on the parent (bonus points for listing downsides like cutting off shadows).</li>
+</ul><blockquote>
+<p><strong>Bonus points</strong> for "create a <a href="http://www.yuiblog.com/blog/2010/05/19/css-101-block-formatting-contexts/">new block formatting context</a>".</p>
+
+<p><strong>Negative points</strong> for something like <code>&lt;br style="clear: both;"&gt;</code></p>
+</blockquote>
+
+<p><a href="https://camo.githubusercontent.com/09126477056d3235eae112f4fb8c51a0c5a5f5eb/687474703a2f2f6373732d747269636b732e636f6d2f77702d636f6e74656e742f637373747269636b732d75706c6f6164732f646972656374696f6e616c636c656172696e672e706e67" target="_blank"><img src="https://camo.githubusercontent.com/09126477056d3235eae112f4fb8c51a0c5a5f5eb/687474703a2f2f6373732d747269636b732e636f6d2f77702d636f6e74656e742f637373747269636b732d75706c6f6164732f646972656374696f6e616c636c656172696e672e706e67" alt="Clearing Floats" data-canonical-src="http://css-tricks.com/wp-content/csstricks-uploads/directionalclearing.png" style="max-width:100%;"></a></p>
+
+<blockquote>
+<p><strong>As a bonus question</strong>, you could ask them to compare using inline-block and floats for building a grid.</p>
+
+<ul>
+<li>Good answer: there are problems either way. With inline block you need to deal with the whitespace issue.
+With floats you need to deal with clearing.</li>
+</ul>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-what-are-sprites-and-why-would-use-them" class="anchor" href="#what-are-sprites-and-why-would-use-them"><span class="octicon octicon-link"></span></a>What are sprites and why would use them?</h2>
+
+<h3>
+<a name="user-content-how-do-you-go-about-creating-them" class="anchor" href="#how-do-you-go-about-creating-them"><span class="octicon octicon-link"></span></a>How do you go about creating them?</h3>
+
+<h3>
+<a name="user-content-what-are-possible-alternatives-to-sprites" class="anchor" href="#what-are-possible-alternatives-to-sprites"><span class="octicon octicon-link"></span></a>What are possible alternatives to sprites?</h3>
+
+<p><a href="http://css-tricks.com/css-sprites/">Sprites are</a> essentially multiple images combined into one. Performance is the reason that they are used. Generally speaking, the slowest thing a website can do is request a resource. The fewer requests a site needs to make, the faster it is. Fast = good. Combining what would be many requests into one = good.</p>
+
+<p><a href="https://camo.githubusercontent.com/44dcc99e9edb78cf92d48866f9493c40d091ad42/687474703a2f2f6373732d747269636b732e636f6d2f77702d636f6e74656e742f637373747269636b732d75706c6f6164732f313435343238323639392d6c686e2d7370726974652e706e67" target="_blank"><img src="https://camo.githubusercontent.com/44dcc99e9edb78cf92d48866f9493c40d091ad42/687474703a2f2f6373732d747269636b732e636f6d2f77702d636f6e74656e742f637373747269636b732d75706c6f6164732f313435343238323639392d6c686e2d7370726974652e706e67" alt="Image Sprites" data-canonical-src="http://css-tricks.com/wp-content/csstricks-uploads/1454282699-lhn-sprite.png" style="max-width:100%;"></a></p>
+
+<p>Asking how they make sprites would just seal the deal that they are actually very familiar with them. Manually creating sprites is certainly a possibility but it isn't very efficent. There are helper tools like <a href="http://css-tricks.com/video-screencasts/105-using-spritecow/">SpriteCow</a> and <a href="http://spriteme.org/">SpriteMe</a>, <a href="http://compass-style.org/help/tutorials/spriting/">Spriting with Compass</a>, or <a href="https://github.com/filamentgroup/grunticon">Grunticon</a>. It's always interesting to hear a real workflow approach.</p>
+
+<blockquote>
+<p>Sprites are raster images. When asking about alternatives, good answers might be related to the fact that sprites are often for icons and icons often don't need to be raster. <a href="http://simurai.com/post/20251013889/svg-stacks">SVG Stacks</a>, <a href="http://css-tricks.com/flat-icons-icon-fonts/">Icon Fonts</a>, <a href="http://copypastecharacter.com/">Unicode</a>...</p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-what-are-some-accessibility-concerns-that-come-up-in-css" class="anchor" href="#what-are-some-accessibility-concerns-that-come-up-in-css"><span class="octicon octicon-link"></span></a>What are some accessibility concerns that come up in CSS?</h2>
+
+<p><a href="http://css-tricks.com/places-its-tempting-to-use-display-none-but-dont/">Hidden content</a> is a big one here. It's only acceptable to use display: none; if you're both trying to hide things visually and the content itself.</p>
+
+<p>CSS controls colors so color <a href="http://colorfilter.wickline.org/">accessibility</a> is relevant. <a href="http://a11yproject.com/posts/never-remove-css-outlines/">Focus styles</a> are also important and directly controlled by CSS.</p>
+
+<p>There is a lot more accessibility stuff that is related to HTML and JavaScript, so mentioning that stuff is great, but I think it's interesting to target the question solely on CSS to force focused thinking.</p>
+
+<hr><h2>
+<a name="user-content-what-is-the-difference-between-inline-inline-block-and-block" class="anchor" href="#what-is-the-difference-between-inline-inline-block-and-block"><span class="octicon octicon-link"></span></a>What is the difference between inline, inline-block, and block?</h2>
+
+<blockquote>
+<p><strong>Bonus points</strong> for bringing up specific details like the fact that you can't transform inline elements.</p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-what-tools-do-you-use-for-cross-browser-testing" class="anchor" href="#what-tools-do-you-use-for-cross-browser-testing"><span class="octicon octicon-link"></span></a>What tools do you use for cross-browser testing?</h2>
+
+<p>They should have some kind of strategy. Perhaps a web based tool like <a href="http://www.browserstack.com/">BrowserStack</a>. Perhaps a VM based tool like <a href="https://www.virtualbox.org/">Virtual Box</a>. Perhaps different actual computers.</p>
+
+<blockquote>
+<p>Part of the job of front end design is making sure things work everywhere they can <em>(based on decided-upon support)</em>. You don't have to love it, but you can't hate it. <em><a href="http://the-pastry-box-project.net/wilson-miner/2013-june-15/">"This right here, this is the job. What kind of work were you expecting?"</a></em></p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-what-are-some-of-your-favorite-web-design-workflow-tools" class="anchor" href="#what-are-some-of-your-favorite-web-design-workflow-tools"><span class="octicon octicon-link"></span></a>What are some of your favorite web design workflow tools?</h2>
+
+<ul>
+<li>What IDE to they like?</li>
+<li>Where do they go for inspiration?</li>
+<li>What experience with version control do they have?</li>
+<li>What was QA like where they have worked? Support?</li>
+<li>What different deployment methods have they worked with?</li>
+<li>Do they know Photoshop or another visual design software alternative?</li>
+<li>Are the comfortable with CLI?</li>
+</ul><p>Those are just some examples, it's interesting to hear about any software they use to get the jobs done. Getting a sense of the tools they use <em>(and better, the tools they like)</em> is interesting.</p>
+
+<blockquote>
+<p><strong>Bonus points:</strong> a sense of excitement about some of the tools.</p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-what-is-responsive-design-all-about" class="anchor" href="#what-is-responsive-design-all-about"><span class="octicon octicon-link"></span></a>What is responsive design all about?</h2>
+
+<p>It's about making websites work wherever the web is. Different devices with different sizes and different capabilities. Responsive design is about taking one code base and making it work for all of them. Part of that is media queries and different visuals. Part of that is different resources <em>(e.g. different JavaScript to handle touch vs click or different images to accommodate the screen)</em>.</p>
+
+<hr><h1>
+<a name="user-content-have-you-ever-worked-with-a-grid-layout-what-are-your-thoughts-on-that" class="anchor" href="#have-you-ever-worked-with-a-grid-layout-what-are-your-thoughts-on-that"><span class="octicon octicon-link"></span></a>Have you ever worked with a grid layout? What are your thoughts on that?</h1>
+
+<ul>
+<li>Why did they need a grid?</li>
+<li>How did they build the grid?</li>
+<li>Was it home grown or did they use a grid tool?
+
+<ul>
+<li>Did they like the grid tool?
+
+<ul>
+<li>What kind of class names did they use?</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Did they go mobile-first or desktop-first?
+
+<ul>
+<li>Was a help or a hinderance?</li>
+</ul>
+</li>
+<li>Do they reach for the grid automatically on any project?</li>
+</ul><hr><h2>
+<a name="user-content-what-are-the-benefits-of-svg" class="anchor" href="#what-are-the-benefits-of-svg"><span class="octicon octicon-link"></span></a>What are the benefits of SVG?</h2>
+
+<p><a href="http://css-tricks.com/using-svg/">SVG</a> is an image format that is vector based. It's an efficient format for that <em>(small file sizes)</em>. You can scale them and they retain their sharpness at any size <em>(bonus points for mentioning raster might have the upper hand at tiny sizes)</em>. You can affect parts of them with CSS and JavaScript as well as SVG specific filters that can do things like blurring.</p>
+
+<hr><h2>
+<a name="user-content-say-you-were-tasked-with-coding-a-design-that-used-non-standard-web-fonts-how-would-you-go-about-it" class="anchor" href="#say-you-were-tasked-with-coding-a-design-that-used-non-standard-web-fonts-how-would-you-go-about-it"><span class="octicon octicon-link"></span></a>Say you were tasked with coding a design that used non-standard web fonts, how would you go about it?</h2>
+
+<p>A non-leading way to get them to talk about <code>@font-face</code> and how it works. Talking about how it works as a core CSS technology is great, as well as talking about services that provide the fonts and can make it easier e.g. Google Fonts, Typekit, Font Deck, Cloud Typography, etc.</p>
+
+<blockquote>
+<p><strong>Bonus points</strong> for obscure knowledge like the history of @font-face syntax or <a href="http://www.change.org/petitions/mozilla-firefox-fix-bug-604421">Firefox's issue</a> with cross-origin fonts.</p>
+</blockquote>
+
+<hr><h2>
+<a name="user-content-explain-to-me-whats-going-on-in-this-css-selector" class="anchor" href="#explain-to-me-whats-going-on-in-this-css-selector"><span class="octicon octicon-link"></span></a>Explain to me what's going on in this CSS selector:</h2>
+
+<div class="highlight highlight-css"><pre><span class="o">[</span><span class="nt">role</span><span class="o">=</span><span class="nt">navigation</span><span class="o">]</span> <span class="o">&gt;</span> <span class="nt">ul</span> <span class="nt">a</span><span class="nd">:not</span><span class="o">([</span><span class="nt">href</span><span class="o">^=</span><span class="nt">mailto</span><span class="o">])</span> <span class="p">{</span>
+
+<span class="p">}</span>
+</pre></div>
+
+<p>This selects anchor links that are not email links that are decedents of an unordered list that is the direct child of any element with a <code>role</code> attribute of 'navigation'.</p>
+
+<blockquote>
+<p>Being able to verbalize a selector is proof you understand them and evidence they can communicate complex tech subjects.</p>
+</blockquote>
+            </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="./js/dev-interview.js"></script>
+</body>
+</html>
