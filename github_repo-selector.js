@@ -62,8 +62,8 @@
         .append(createOption('bryanhales-wf/mobile',            'mobile'))
 
         .append('<div class="divider-horizontal">Personal</div>')
-        .append(createOption('HugoGiraudel/SassDoc',            'personal > Hugo/SassDoc'));
-        .append(createOption('alademann/SassDoc',               'personal > Me/SassDoc'));
+        .append(createOption('HugoGiraudel/SassDoc',            'personal > Hugo/SassDoc'))
+        .append(createOption('alademann/SassDoc',               'personal > Me/SassDoc'))
         .append(createOption('alademann/misc',                  'personal > misc'))
         .append(createOption('alademann/SublimeText3-Packages', 'personal > sublime'))
         .append(createOption('alademann/Sass-Bootstrap',        'personal > sass bootstrap'));
